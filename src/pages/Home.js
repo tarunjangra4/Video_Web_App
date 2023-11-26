@@ -22,12 +22,12 @@ const style = {
 };
 
 AWS.config.update({
-  accessKeyId: "AKIA2RGB5PNDDMTHJYFL",
-  secretAccessKey: "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",
+  accessKeyId: "",
+  secretAccessKey: "",
   region: "ca-central-1",
 });
 
-const Home = () => {
+const Home1 = () => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState("one");
   const [isVideoUploaded, setIsVideoUploaded] = useState(false);
@@ -163,4 +163,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home1;
