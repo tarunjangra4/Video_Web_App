@@ -9,16 +9,19 @@ import {
 } from "@mui/icons-material";
 import { VideoContext } from "../context/VideoContext";
 
-const IntroSection = () => {
-  const [hoverItem, setHoverItem] = useState();
+const ChatbotSection = () => {
+  const [hoverItem, setHoverItem] = useState(null);
   const containerRef = useRef(null);
-  const { getContent, introVideos, videoUpdated } = useContext(VideoContext);
+  const { getContent, chatBotsVideos, videoUpdated } = useContext(VideoContext);
 
   useEffect(() => {
-    getContent("Introduction");
+    getContent("ChatBots");
   }, [videoUpdated]);
 
+  console.log("chat bot Videos", chatBotsVideos);
+
   const handleScrollRight = () => {
+    console.log("hello");
     if (containerRef.current) {
       containerRef.current.scrollTo({
         left: containerRef.current.scrollLeft + 910,
@@ -27,9 +30,8 @@ const IntroSection = () => {
     }
   };
 
-  console.log("intro introVideos", introVideos);
-
   const handleScrollLeft = () => {
+    console.log("hello");
     if (containerRef.current) {
       containerRef.current.scrollTo({
         left: containerRef.current.scrollLeft - 910,
@@ -43,9 +45,7 @@ const IntroSection = () => {
   return (
     <div className="w-full relative">
       <div className="flex justify-between pr-6">
-        <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
-          Introduction
-        </h2>
+        <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">Chat-Bots</h2>
         {/* <h2 className="mr-4 text-[#b4adff] font-semibold text-lg cursor-pointer">
           View all
         </h2> */}
@@ -54,8 +54,8 @@ const IntroSection = () => {
         ref={containerRef}
         className="flex overflow-x-auto no-scrollbar gap-10 pb-5 pr-6 pl-px mt-2"
       >
-        {introVideos.length > 0 &&
-          introVideos.map((item, index) => (
+        {chatBotsVideos?.length > 0 &&
+          chatBotsVideos?.map((item, index) => (
             <div
               key={index}
               className="relative w-[400px] h-60 flex-shrink-0 shadow-lg shadow-[#8d86db] rounded cursor-pointer"
@@ -81,7 +81,7 @@ const IntroSection = () => {
                 )}
             </div>
           ))}
-        {introVideos.length === 0 && (
+        {chatBotsVideos?.length === 0 && (
           <p className="w-full text-center my-20">No data available.</p>
         )}
       </div>
@@ -111,4 +111,4 @@ const IntroSection = () => {
   );
 };
 
-export default IntroSection;
+export default ChatbotSection;

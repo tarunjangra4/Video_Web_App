@@ -4,6 +4,8 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import ResetPassword from "./pages/ResetPassword";
+import Profile from "./pages/Profile";
+import VideoPlayer from "./pages/VideoPlayer";
 
 const App = () => {
   const location = useLocation();
@@ -27,7 +29,8 @@ const App = () => {
           <div className="w-[100%] flex justify-center">
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/:username" element={<Profile />}></Route> */}
+              <Route path="/profile" element={<Profile />}></Route>
+              <Route path="/:videoId" element={<VideoPlayer />}></Route>
               {/* <Route path="/profile/:postId" element={<Profile />}></Route> */}
               {/* <Route path="/edit-profile" element={<EditProfile />}></Route> */}
             </Routes>

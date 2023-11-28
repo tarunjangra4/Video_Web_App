@@ -18,10 +18,7 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(email, password);
-
   const handleLogin = async () => {
-    console.log("click");
     await login({ email, password });
     navigate("/");
   };

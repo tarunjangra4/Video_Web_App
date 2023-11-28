@@ -9,6 +9,10 @@ import "@fontsource/roboto/700.css";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { AuthContextProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContextProvider } from "./context/UserContext";
+import { VideoContextProvider } from "./context/VideoContext";
 
 export const shades = {
   primary: {
@@ -32,10 +36,15 @@ export const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthContextProvider>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+    <UserContextProvider>
+      <VideoContextProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <App />
+            <ToastContainer />
+          </ThemeProvider>
+        </BrowserRouter>
+      </VideoContextProvider>
+    </UserContextProvider>
   </AuthContextProvider>
 );

@@ -7,6 +7,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { AuthContextProvider } from "../context/AuthContext";
+import { UserContextProvider } from "../context/UserContext";
 
 export const shades = {
   primary: {
@@ -30,11 +31,13 @@ export const theme = createTheme({
 const index = () => {
   return (
     <AuthContextProvider>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <Router />
-        </ThemeProvider>
-      </BrowserRouter>
+      <UserContextProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <Router />
+          </ThemeProvider>
+        </BrowserRouter>
+      </UserContextProvider>
     </AuthContextProvider>
   );
 };

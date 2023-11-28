@@ -57,7 +57,7 @@ export const AuthContextProvider = ({ children }) => {
   const isLoggedIn = async () => {
     try {
       setIsLoading(false);
-      let userToken = await localStorage.getItem("token");
+      let userToken = localStorage.getItem("token");
       setToken(userToken);
     } catch (err) {
       console.error("is loggedIn error ", err);

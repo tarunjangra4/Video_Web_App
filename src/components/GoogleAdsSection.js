@@ -1,32 +1,115 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import testImage from "../images/testImage1.jpg";
+import ArrowRight from "@mui/icons-material/ArrowRight";
+import {
+  ArrowLeft,
+  PlayCircleFilledOutlined,
+  SkipNext,
+  SkipPrevious,
+} from "@mui/icons-material";
+import { VideoContext } from "../context/VideoContext";
 
 const GoogleAdsSection = () => {
+  const [hoverItem, setHoverItem] = useState(null);
+  const containerRef = useRef(null);
+  const { getContent, googleAdsVideos, videoUpdated } =
+    useContext(VideoContext);
+
+  useEffect(() => {
+    getContent("GoogleAds"); // SEO, CRM, ChatBots
+  }, [videoUpdated]);
+
+  console.log("googleads Videos", googleAdsVideos);
+
+  const handleScrollRight = () => {
+    console.log("hello");
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft + 910,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScrollLeft = () => {
+    console.log("hello");
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft - 910,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const arr = [1, 1, 1, 1, 1];
+
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <div className="flex justify-between pr-6">
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Google Ads
         </h2>
-        <h2 className="mr-4 text-[#b4adff] font-semibold text-lg cursor-pointer">
+        {/* <h2 className="mr-4 text-[#b4adff] font-semibold text-lg cursor-pointer">
           View all
-        </h2>
+        </h2> */}
       </div>
-      <div className="flex overflow-x-auto no-scrollbar gap-10 pb-5 pr-6 mt-2">
-        {arr.map((item, index) => (
-          <div
-            key={index}
-            className="w-[450px] h-64 flex-shrink-0 shadow-lg shadow-[#8d86db]"
-          >
-            <img
-              className="w-[450px] h-64 object-fill flex-shrink-0 rounded"
-              src={testImage}
-              alt=""
-            />
-          </div>
-        ))}
+      <div
+        ref={containerRef}
+        className="flex overflow-x-auto no-scrollbar gap-10 pb-5 pr-6 pl-px mt-2"
+      >
+        {googleAdsVideos?.length > 0 &&
+          googleAdsVideos?.map((item, index) => (
+            <div
+              key={index}
+              className="relative w-[400px] h-60 flex-shrink-0 shadow-lg shadow-[#8d86db] rounded cursor-pointer"
+              onMouseEnter={() => setHoverItem(index)}
+              onMouseLeave={() => setHoverItem(null)}
+            >
+              <img
+                className="w-[400px] h-60 object-fill flex-shrink-0 rounded"
+                // src={testImage}
+                src={item?.thumbnailUrl}
+                alt=""
+                loading="lazy"
+              />
+              {hoverItem !== undefined &&
+                hoverItem !== null &&
+                hoverItem === index && (
+                  <div className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25">
+                    <PlayCircleFilledOutlined
+                      style={{ fontSize: 50 }}
+                      className="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-[#4338b0]"
+                    />
+                  </div>
+                )}
+            </div>
+          ))}
+        {googleAdsVideos?.length === 0 && (
+          <p className="w-full text-center my-20">No data available.</p>
+        )}
       </div>
+      <div className="absolute top-0 right-12 flex gap-5">
+        <SkipPrevious
+          onClick={() => handleScrollLeft()}
+          className="text-[#8d86db] hover:text-[#4338b0] hover:font-medium cursor-pointer"
+        />
+        <SkipNext
+          className="text-[#8d86db] hover:text-[#4338b0] hover:font-medium cursor-pointer"
+          onClick={() => handleScrollRight()}
+        />
+      </div>
+      {/* <div
+        className="w-8 h-60 flex items-center absolute bottom-5 right-0 backdrop-brightness-75"
+        onClick={() => handleScrollRight()}
+      >
+        <ArrowRight fontSize="large" />
+      </div>
+      <div
+        className="w-8 h-60 flex items-center absolute bottom-5 left-0 backdrop-brightness-75"
+        onClick={() => handleScrollLeft()}
+      >
+        <ArrowLeft fontSize="large" />
+      </div> */}
     </div>
   );
 };

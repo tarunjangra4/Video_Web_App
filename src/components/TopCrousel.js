@@ -7,7 +7,7 @@ import testImage3 from "../images/testImage3.jpg";
 
 const TopCrousel = () => {
   return (
-    <div className="w-full">
+    <div className="w-full mt-20 px-20">
       <Carousel
         centerMode
         autoPlay
@@ -16,9 +16,24 @@ const TopCrousel = () => {
         interval={1000}
         renderThumbs={() => null}
       >
-        <img className="h-80 w-full object-center" src={testImage1} alt="" />
-        <img className="h-80 w-full object-center" src={testImage2} alt="" />
-        <img className="h-80 w-full object-center" src={testImage3} alt="" />
+        <img
+          className="h-[360px] w-full object-center"
+          src={testImage1}
+          alt=""
+          loading="lazy"
+        />
+        <img
+          className="h-[360px] w-full object-center"
+          src={testImage2}
+          alt=""
+          loading="lazy"
+        />
+        <img
+          className="h-[360px] w-full object-center"
+          src={testImage3}
+          alt=""
+          loading="lazy"
+        />
       </Carousel>
     </div>
   );
