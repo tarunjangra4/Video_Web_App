@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import loginPageImage from "../images/loginPageImage.svg";
 import { Button, InputAdornment, TextField, makeStyles } from "@mui/material";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -6,11 +6,13 @@ import Input from "@mui/material/Input";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { AuthContext } from "../context/AuthContext";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required("Email is required")
     .email("Invalid email address"),
+  currPassword: Yup.string().required("Current Password is required"),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
@@ -25,8 +27,11 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 const ResetPassword = () => {
+  const [showCurrPassword, setShowCurrPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { resetPassword } = useContext(AuthContext);
 
   return (
     <div className="h-screen flex gap-28 items-center justify-center bg-[#F4F7FA]">
@@ -34,6 +39,7 @@ const ResetPassword = () => {
       <Formik
         initialValues={{
           email: "",
+          currPassword: "",
           password: "",
           confirmPassword: "",
         }}
@@ -41,6 +47,11 @@ const ResetPassword = () => {
         onSubmit={(values) => {
           // same shape as initial values
           // login({ email: values.email, password });
+          resetPassword({
+            email: values.email,
+            currPassword: values.currPassword,
+            password: values.password,
+          });
         }}
       >
         {({
@@ -71,6 +82,29 @@ const ResetPassword = () => {
             {touched.email && errors.email && (
               <p className="text-red-500">{errors.email}</p>
             )}
+
+            <div className="relative mt-10">
+              <TextField
+                className="w-80"
+                label="Current Password"
+                variant="outlined"
+                type={showCurrPassword ? "text" : "password"}
+                id="currPassword"
+                name="currPassword"
+                value={values.currPassword}
+                onChange={handleChange("currPassword")}
+              />
+              <div
+                className="absolute top-[50%] translate-y-[-50%] left-[285px] cursor-pointer"
+                onClick={() => setShowCurrPassword(!showCurrPassword)}
+              >
+                {showCurrPassword ? <VisibilityOff /> : <Visibility />}
+              </div>
+            </div>
+            {touched.currPassword && errors.currPassword && (
+              <p className="text-red-500">{errors.currPassword}</p>
+            )}
+
             <div className="relative mt-10">
               <TextField
                 className="w-80"
@@ -83,7 +117,7 @@ const ResetPassword = () => {
                 onChange={handleChange("password")}
               />
               <div
-                className="absolute top-[50%] translate-y-[-50%] right-2 cursor-pointer"
+                className="absolute top-[50%] translate-y-[-50%] left-[285px] cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -104,7 +138,7 @@ const ResetPassword = () => {
                 onChange={handleChange("confirmPassword")}
               />
               <div
-                className="absolute top-[50%] translate-y-[-50%] right-2 cursor-pointer"
+                className="absolute top-[50%] translate-y-[-50%] left-[285px] cursor-pointer"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? <VisibilityOff /> : <Visibility />}

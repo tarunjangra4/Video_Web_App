@@ -33,14 +33,14 @@ const Profile = () => {
       //   }}
     >
       <div className="">
-        <div className="flex gap-6">
+        {/* <div className="flex gap-6">
           <ArrowBack
             fontSize="large"
             className="border-2 border-gray-400 rounded-full text-gray-500 cursor-pointer"
             onClick={() => navigate(-1)}
           />
           <div className="text-2xl font-semibold text-gray-600">Profile</div>
-        </div>
+        </div> */}
         <hr className="mb-16 mt-5" />
         <div className="flex gap-20 px-10">
           <div className="w-[120px] h-[120px] border rounded-full mb-5">

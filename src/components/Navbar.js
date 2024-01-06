@@ -12,9 +12,10 @@ const Navbar = ({ handleOpen }) => {
       <img
         src={appIcon}
         alt=""
-        className="w-20"
+        className="w-20 cursor-pointer"
         loading="lazy"
         title="Matrix 24"
+        onClick={() => navigate("/")}
       />
       <div className="flex items-center gap-5">
         <AccountCircle
@@ -23,7 +24,7 @@ const Navbar = ({ handleOpen }) => {
           onClick={() => navigate("/profile")}
           titleAccess="Profile"
         />
-        <Button variant="outlined" onClick={handleOpen}>
+        <Button title="Upload Video" variant="outlined" onClick={handleOpen}>
           Upload
         </Button>
       </div>

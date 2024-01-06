@@ -11,22 +11,19 @@ import { VideoContext } from "../context/VideoContext";
 import { Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
-const GoogleAdsSection = () => {
-  const [hoverItem, setHoverItem] = useState(null);
+const LatestVideoSection = () => {
+  const [hoverItem, setHoverItem] = useState();
   const containerRef = useRef(null);
-  const { getContent, googleAdsVideos, videoUpdated, loading2 } =
+  const { getContent, latestVideos, videoUpdated, loading6 } =
     useContext(VideoContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    getContent("GoogleAds"); // SEO, CRM, ChatBots
+    getContent();
   }, [videoUpdated]);
 
-  console.log("googleads Videos", googleAdsVideos);
-
   const handleScrollRight = () => {
-    console.log("hello");
     if (containerRef.current) {
       containerRef.current.scrollTo({
         left: containerRef.current.scrollLeft + 910,
@@ -35,8 +32,9 @@ const GoogleAdsSection = () => {
     }
   };
 
+  console.log("latest Videos", latestVideos);
+
   const handleScrollLeft = () => {
-    console.log("hello");
     if (containerRef.current) {
       containerRef.current.scrollTo({
         left: containerRef.current.scrollLeft - 910,
@@ -51,11 +49,11 @@ const GoogleAdsSection = () => {
     <div className="w-full relative">
       <div className="flex justify-between pr-6">
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
-          Google Ads
+          Recently updated
         </h2>
         <Link
           className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/GoogleAds`}
+          to={`/video/latest`}
         >
           View all
         </Link>
@@ -64,13 +62,14 @@ const GoogleAdsSection = () => {
         ref={containerRef}
         className="flex overflow-x-auto no-scrollbar gap-10 pb-5 pr-6 pl-px mt-2"
       >
-        {googleAdsVideos?.length > 0 &&
-          googleAdsVideos?.map((item, index) => (
+        {latestVideos?.length > 0 &&
+          latestVideos?.map((item, index) => (
             <div
               key={index}
               className="relative w-[400px] h-60 flex-shrink-0 shadow-lg shadow-[#8d86db] rounded cursor-pointer"
               onMouseEnter={() => setHoverItem(index)}
               onMouseLeave={() => setHoverItem(null)}
+              //   onClick={() => navigate(`/${item.videoUrl}`)}
             >
               <img
                 className="w-[400px] h-60 object-fill flex-shrink-0 rounded"
@@ -100,12 +99,12 @@ const GoogleAdsSection = () => {
                 )}
             </div>
           ))}
-        {loading2 && (
+        {loading6 && (
           <div className="w-full h-40 flex justify-center items-center">
             <CircularProgress />
           </div>
         )}
-        {!loading2 && googleAdsVideos?.length === 0 && (
+        {!loading6 && latestVideos?.length === 0 && (
           <p className="w-full text-center my-20">No data available.</p>
         )}
       </div>
@@ -135,4 +134,4 @@ const GoogleAdsSection = () => {
   );
 };
 
-export default GoogleAdsSection;
+export default LatestVideoSection;

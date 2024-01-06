@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import loginPageImage from "../images/loginPageImage.svg";
 import { Button, InputAdornment, TextField, makeStyles } from "@mui/material";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -6,6 +6,7 @@ import Input from "@mui/material/Input";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { AuthContext } from "../context/AuthContext";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { signup } = useContext(AuthContext);
 
   return (
     <div className="h-screen flex gap-28 items-center justify-center bg-[#F4F7FA]">
@@ -41,6 +43,7 @@ const SignUp = () => {
         onSubmit={(values) => {
           // same shape as initial values
           // login({ email: values.email, password });
+          signup({ email: values.email, password: values.password });
         }}
       >
         {({

@@ -8,12 +8,16 @@ import {
   SkipPrevious,
 } from "@mui/icons-material";
 import { VideoContext } from "../context/VideoContext";
+import { Link, useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const FacebookAdsSection = () => {
   const [hoverItem, setHoverItem] = useState(null);
   const containerRef = useRef(null);
-  const { getContent, facebookAdsVideos, videoUpdated } =
+  const { getContent, facebookAdsVideos, videoUpdated, loading1 } =
     useContext(VideoContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getContent("FacebookAds"); //GoogleAds, SEO, CRM, ChatBots
@@ -48,9 +52,12 @@ const FacebookAdsSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Facebook Ads
         </h2>
-        {/* <h2 className="mr-4 text-[#b4adff] font-semibold text-lg cursor-pointer">
+        <Link
+          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+          to={`/video/FacebookAds`}
+        >
           View all
-        </h2> */}
+        </Link>
       </div>
       <div
         ref={containerRef}
@@ -74,7 +81,16 @@ const FacebookAdsSection = () => {
               {hoverItem !== undefined &&
                 hoverItem !== null &&
                 hoverItem === index && (
-                  <div className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25">
+                  <div
+                    className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25"
+                    onClick={() =>
+                      navigate(
+                        `/video?name=${
+                          item.videoName
+                        }&path=${encodeURIComponent(item.videoUrl)}`
+                      )
+                    }
+                  >
                     <PlayCircleFilledOutlined
                       style={{ fontSize: 50 }}
                       className="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-[#4338b0]"
@@ -83,7 +99,12 @@ const FacebookAdsSection = () => {
                 )}
             </div>
           ))}
-        {facebookAdsVideos?.length === 0 && (
+        {loading1 && (
+          <div className="w-full h-40 flex justify-center items-center">
+            <CircularProgress />
+          </div>
+        )}
+        {!loading1 && facebookAdsVideos?.length === 0 && (
           <p className="w-full text-center my-20">No data available.</p>
         )}
       </div>

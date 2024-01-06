@@ -8,11 +8,16 @@ import {
   SkipPrevious,
 } from "@mui/icons-material";
 import { VideoContext } from "../context/VideoContext";
+import { Link, useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const IntroSection = () => {
   const [hoverItem, setHoverItem] = useState();
   const containerRef = useRef(null);
-  const { getContent, introVideos, videoUpdated } = useContext(VideoContext);
+  const { getContent, introVideos, videoUpdated, loading } =
+    useContext(VideoContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getContent("Introduction");
@@ -46,9 +51,12 @@ const IntroSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Introduction
         </h2>
-        {/* <h2 className="mr-4 text-[#b4adff] font-semibold text-lg cursor-pointer">
+        <Link
+          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+          to={`/video/Introduction`}
+        >
           View all
-        </h2> */}
+        </Link>
       </div>
       <div
         ref={containerRef}
@@ -72,7 +80,16 @@ const IntroSection = () => {
               {hoverItem !== undefined &&
                 hoverItem !== null &&
                 hoverItem === index && (
-                  <div className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25">
+                  <div
+                    className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25"
+                    onClick={() =>
+                      navigate(
+                        `/video?name=${
+                          item.videoName
+                        }&path=${encodeURIComponent(item.videoUrl)}`
+                      )
+                    }
+                  >
                     <PlayCircleFilledOutlined
                       style={{ fontSize: 50 }}
                       className="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-[#4338b0]"
@@ -81,7 +98,12 @@ const IntroSection = () => {
                 )}
             </div>
           ))}
-        {introVideos.length === 0 && (
+        {loading && (
+          <div className="w-full h-40 flex justify-center items-center">
+            <CircularProgress />
+          </div>
+        )}
+        {!loading && introVideos?.length === 0 && (
           <p className="w-full text-center my-20">No data available.</p>
         )}
       </div>

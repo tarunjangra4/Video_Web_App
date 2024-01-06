@@ -13,7 +13,8 @@ export const UserContextProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios
-        .get("http://99.79.194.141:8080/api/user-role", {
+        // .get("http://99.79.194.141:8080/api/user-role", {
+        .get(`${BASE_URL}/api/user-role`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
@@ -35,7 +36,8 @@ export const UserContextProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios
-        .get("http://99.79.194.141:8080/api/user-profile", {
+        // .get("http://99.79.194.141:8080/api/user-profile", {
+        .get(`${BASE_URL}/api/user-profile`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
@@ -60,7 +62,8 @@ export const UserContextProvider = ({ children }) => {
     try {
       const res = await axios
         // .get('http://52.60.53.135:8080/api/117.235.194.61', {
-        .put("http://99.79.194.141:8080/api/user-profile", {
+        // .put("http://99.79.194.141:8080/api/user-profile", {
+        .put(`${BASE_URL}/api/user-profile`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
