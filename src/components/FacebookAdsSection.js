@@ -52,12 +52,14 @@ const FacebookAdsSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Facebook Ads
         </h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/FacebookAds`}
-        >
-          View all
-        </Link>
+        {facebookAdsVideos?.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/FacebookAds`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}

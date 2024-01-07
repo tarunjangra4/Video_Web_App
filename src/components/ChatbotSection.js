@@ -51,12 +51,14 @@ const ChatbotSection = () => {
     <div className="w-full relative">
       <div className="flex justify-between pr-6">
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">Chat-Bots</h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/ChatBots`}
-        >
-          View all
-        </Link>
+        {chatBotsVideos?.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/ChatBots`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}

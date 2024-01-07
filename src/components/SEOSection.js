@@ -53,12 +53,14 @@ const SEOSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Search Engine Optimization
         </h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/SEO`}
-        >
-          View all
-        </Link>
+        {seoVideos?.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/SEO`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}

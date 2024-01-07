@@ -53,12 +53,14 @@ const GoogleAdsSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Google Ads
         </h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/GoogleAds`}
-        >
-          View all
-        </Link>
+        {googleAdsVideos?.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/GoogleAds`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}

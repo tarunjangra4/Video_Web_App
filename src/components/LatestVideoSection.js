@@ -51,12 +51,14 @@ const LatestVideoSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Recently updated
         </h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/latest`}
-        >
-          View all
-        </Link>
+        {latestVideos?.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/latest`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}

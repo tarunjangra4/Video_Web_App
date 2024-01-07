@@ -51,12 +51,14 @@ const IntroSection = () => {
         <h2 className="mr-4 text-[#4338b0] font-semibold text-xl">
           Introduction
         </h2>
-        <Link
-          className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
-          to={`/video/Introduction`}
-        >
-          View all
-        </Link>
+        {introVideos.length > 0 && (
+          <Link
+            className="mr-28 text-[#4338b0] font-semibold text-lg cursor-pointer"
+            to={`/video/Introduction`}
+          >
+            View all
+          </Link>
+        )}
       </div>
       <div
         ref={containerRef}
