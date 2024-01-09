@@ -16,12 +16,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../Config";
 
-AWS.config.update({
-  accessKeyId: "AKIA2RGB5PNDDMTHJYFL",
-  secretAccessKey: "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",
-  region: "ca-central-1",
-});
-
 const Upload = (props) => {
   const {
     handleModalClose,
@@ -80,7 +74,10 @@ const Upload = (props) => {
     // Handle the selected file(s)
     const selectedFile = e.target.files[0];
     console.log("Selected video:", selectedFile);
-    selectedFile && uploadVideoToS3(selectedFile);
+    selectedFile &&
+      (selectedFile?.name?.includes("mkv") ||
+        selectedFile?.type?.includes("video")) &&
+      uploadVideoToS3(selectedFile);
   };
 
   const uploadVideoToS3 = (file) => {
