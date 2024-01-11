@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TopCrousel from "../components/TopCrousel";
 import IntroSection from "../components/IntroSection";
 import testImage from "../images/testImage1.jpg";
@@ -12,6 +12,7 @@ import AWS from "aws-sdk";
 import CRMSection from "../components/CRMSection";
 import ChatbotSection from "../components/ChatbotSection";
 import LatestVideoSection from "../components/LatestVideoSection";
+import { UserContext } from "../context/UserContext";
 
 const style = {
   position: "absolute",
@@ -32,6 +33,7 @@ const style = {
 
 const Home = () => {
   const [openModal, setModalOpen] = useState(false);
+  const { getUserRole } = useContext(UserContext);
   // const [step, setStep] = useState("one");
   // const videoInputRef = useRef(null);
   // const [isVideoUploaded, setIsVideoUploaded] = useState(false); //
@@ -44,6 +46,10 @@ const Home = () => {
   // const [vidDescription, setVidDescription] = useState("");
 
   const arr = [1, 1, 1, 1, 1];
+
+  useEffect(() => {
+    getUserRole();
+  }, []);
 
   // const s3 = new AWS.S3();
 
@@ -124,7 +130,7 @@ const Home = () => {
 
   return (
     <div className="w-full pb-5">
-      {/* <Navbar handleOpen={handleModalOpen} /> */}
+      <Navbar handleOpen={handleModalOpen} />
       <TopCrousel />
       <div className="w-[90%] ml-[10%] flex flex-col gap-y-10 mt-10">
         <LatestVideoSection />

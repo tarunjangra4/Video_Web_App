@@ -1,12 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import bgImg from "../images/profile-background.png";
 import { AccountCircleOutlined, ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Button, Modal, TextField } from "@mui/material";
 import { UserContext } from "../context/UserContext";
 import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
+import Upload from "../components/Upload";
 
 const Profile = () => {
+  const [openModal, setModalOpen] = useState(false);
+
   const {
     updateUserProfile,
     getUserProfile,
@@ -18,6 +22,9 @@ const Profile = () => {
 
   const { logout } = useContext(AuthContext);
 
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
   useEffect(() => {
     getUserProfile();
   }, [profileUpdated]);
@@ -25,22 +32,23 @@ const Profile = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="w-full h-screen flex justify-center pt-16"
+      className="w-full h-screen flex justify-center"
       //   style={{
       //     backgroundImage: `url(${bgImg})`,
       //     backgroundRepeat: "no-repeat",
       //     backgroundSize: "100% 100%",
       //   }}
     >
-      <div className="">
-        {/* <div className="flex gap-6">
+      <Navbar handleOpen={handleModalOpen} />
+      <div className="pt-28">
+        <div className="flex gap-6">
           <ArrowBack
             fontSize="large"
             className="border-2 border-gray-400 rounded-full text-gray-500 cursor-pointer"
             onClick={() => navigate(-1)}
           />
           <div className="text-2xl font-semibold text-gray-600">Profile</div>
-        </div> */}
+        </div>
         <hr className="mb-16 mt-5" />
         <div className="flex gap-20 px-10">
           <div className="w-[120px] h-[120px] border rounded-full mb-5">
@@ -123,16 +131,20 @@ const Profile = () => {
                   shrink: userProfile.bio && true,
                 }}
                 value={userProfile.bio}
-                onChange={(e) =>
-                  setUserProfile({ ...userProfile, bio: e.target.value })
-                }
+                onChange={(e) => {
+                  console.log("new data ", {
+                    ...userProfile,
+                    bio: e.target.value,
+                  });
+                  setUserProfile({ ...userProfile, bio: e.target.value });
+                }}
               />
             </div>
             <div className="mb-2">
               <Button
                 className="w-[300px]"
                 variant="contained"
-                onClick={updateUserProfile}
+                onClick={() => updateUserProfile()}
               >
                 Update
               </Button>
@@ -151,6 +163,9 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Modal open={openModal} onClose={handleModalClose}>
+        <Upload handleModalClose={handleModalClose} />
+      </Modal>
     </div>
   );
 };

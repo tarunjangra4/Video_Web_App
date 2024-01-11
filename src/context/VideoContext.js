@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../Config";
+import { toast } from "react-toastify";
 // import { encode as btoa } from "base-64";
 
 export const VideoContext = createContext();
@@ -23,8 +24,9 @@ export const VideoContextProvider = ({ children }) => {
   const [latestVideos, setLatestVideos] = useState([]);
   const [videoUpdated, setVideoUpdated] = useState(false);
 
+  const token = localStorage.getItem("token");
+
   const getContent = async (contentType) => {
-    const token = localStorage.getItem("token");
     setLoading(true);
     setLoading1(true);
     setLoading2(true);
@@ -33,12 +35,8 @@ export const VideoContextProvider = ({ children }) => {
     setLoading5(true);
     setLoading6(true);
     try {
-      const res = await axios
-        // .get('http://52.60.53.135:8080/api/content', {
-        // .get("http://matrix24app.ca:8080/api/content", {
+      await axios
         .get("https://matrix24app.ca/api/content", {
-          // .get("http://99.79.194.141:8080/api/content", {
-          // .get("https://15.156.114.51/api/content", {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
@@ -71,19 +69,55 @@ export const VideoContextProvider = ({ children }) => {
             setLatestVideos(response?.data?.content || []);
           }
           // setVideoDetails(response?.data?.content || []);
-        })
-        .catch((error) => {
-          console.log("erro ", error);
-          setLoading(false);
-          setLoading1(false);
-          setLoading2(false);
-          setLoading3(false);
-          setLoading4(false);
-          setLoading5(false);
-          setLoading6(false);
         });
     } catch (error) {
       console.log("err ", error);
+      setLoading(false);
+      setLoading1(false);
+      setLoading2(false);
+      setLoading3(false);
+      setLoading4(false);
+      setLoading5(false);
+      setLoading6(false);
+      toast.error(error.response.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const updateVideoContent = async (data) => {
+    try {
+      await axios
+        .put("https://matrix24app.ca/api/content", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          data,
+        })
+        .then((response) => {
+          setVideoUpdated((prev) => !prev);
+        });
+    } catch (error) {
+      console.log("err ", error);
+      setVideoUpdated((prev) => !prev);
+      toast.error(error.response.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -100,6 +134,7 @@ export const VideoContextProvider = ({ children }) => {
         crmVideos,
         chatBotsVideos,
         latestVideos,
+        updateVideoContent,
         videoUpdated,
         loading,
         loading1,
