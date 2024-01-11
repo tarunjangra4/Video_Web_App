@@ -105,6 +105,16 @@ export const VideoContextProvider = ({ children }) => {
         })
         .then((response) => {
           setVideoUpdated((prev) => !prev);
+          toast.success("Details has been uloaded successfully.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
     } catch (error) {
       console.log("err ", error);
