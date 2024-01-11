@@ -47,6 +47,10 @@ const App = () => {
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/video" element={<VideoPlayer />}></Route>
                 <Route
+                  path="/video/:contentType/:videoName"
+                  element={<Sections />}
+                ></Route>
+                <Route
                   path="/video/:contentType"
                   element={<Sections />}
                 ></Route>

@@ -95,17 +95,27 @@ const SidebarScroll = ({
 }) => {
   useEffect(() => {
     console.log("videodata ", videosData);
-    active >= 0 &&
-      setCurrVidDetails({
-        id: videosData?.[active]?.id,
-        thumbnail: videosData?.[active]?.thumbnailUrl,
-        url: videosData?.[active]?.videoUrl,
-        pdf: videosData?.[active]?.pdfUrl,
-        name: videosData?.[active]?.videoName,
-        videoDescription: videosData?.[active]?.videoDescription,
-        completeDescription: videosData?.[active]?.completeDescription,
-      });
-  }, [videosData, active]);
+    // active >= 0 &&
+    // setCurrVidDetails({
+    //     id: videosData?.[active]?.id,
+    //     thumbnail: videosData?.[active]?.thumbnailUrl,
+    //     url: videosData?.[active]?.videoUrl,
+    //     pdf: videosData?.[active]?.pdfUrl,
+    //     name: videosData?.[active]?.videoName,
+    //     videoDescription: videosData?.[active]?.videoDescription,
+    //     completeDescription: videosData?.[active]?.completeDescription,
+    //   });
+    setCurrVidDetails({
+      id: videosData?.[0]?.id,
+      thumbnail: videosData?.[0]?.thumbnailUrl,
+      url: videosData?.[0]?.videoUrl,
+      pdf: videosData?.[0]?.pdfUrl,
+      name: videosData?.[0]?.videoName,
+      videoDescription: videosData?.[0]?.videoDescription,
+      completeDescription: videosData?.[0]?.completeDescription,
+    });
+    //   }, [videosData, active]);
+  }, [videosData]);
 
   return (
     <>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../context/VideoContext";
 import SidebarScroll from "../components/SidebarScroll";
 import appIcon from "../images/icon.png";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, ArrowBack } from "@mui/icons-material";
 import { UserContext } from "../context/UserContext";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import TextEditor from "../components/TextEditor";
@@ -11,14 +11,16 @@ import PreviewComponent from "../components/PreviewComponent";
 import downloadPdfIcon from "../images/download-pdf.png";
 
 const Sections = () => {
+  const { contentType, videoName } = useParams();
   const [videos, setVideos] = useState([]);
   const [currVidDetails, setCurrVidDetails] = useState(null); // selected video
   const [active, setActive] = useState(0);
   const [description, setDescription] = useState("");
   const [initialScript, setInitialScript] = useState("");
-  const { contentType } = useParams();
   const videoRef = useRef(null);
   const userRole = localStorage.getItem("role");
+
+  console.log("videoName ", videoName);
 
   const {
     getContent,
@@ -148,24 +150,36 @@ const Sections = () => {
             Matrix 24
           </h2>
         </div>
-        <p
-          className="text-xl font-medium mt-8"
-          style={{ fontFamily: "Noto Serif, serif" }}
-        >
-          {contentType.charAt(0).toUpperCase() + contentType.slice(1)}
-        </p>
-        <div className="flex gap-2" style={{ fontFamily: "Open Sans, serif" }}>
-          <div className="relative">
-            <CircularProgress
-              variant="determinate"
-              size={16}
-              value={Math.floor(getProgress())}
-              title={`${Math.floor(getProgress())}%`}
-            />
+        <div className="flex items-center mt-8 gap-3">
+          <ArrowBack
+            fontSize="large"
+            className="border-2 border-gray-400 rounded-full text-gray-500 cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          <div>
+            <p
+              className="text-xl font-medium"
+              style={{ fontFamily: "Noto Serif, serif" }}
+            >
+              {contentType.charAt(0).toUpperCase() + contentType.slice(1)}
+            </p>
+            <div
+              className="flex gap-2"
+              style={{ fontFamily: "Open Sans, serif" }}
+            >
+              <div className="relative">
+                <CircularProgress
+                  variant="determinate"
+                  size={16}
+                  value={Math.floor(getProgress())}
+                  title={`${Math.floor(getProgress())}%`}
+                />
+              </div>
+              <p className="text-sm text-gray-500">
+                {getCompletedVideos()}/{videos?.length} completed
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-gray-500">
-            {getCompletedVideos()}/{videos?.length} completed
-          </p>
         </div>
         <div className="mt-4 overflow-auto">
           <SidebarScroll
