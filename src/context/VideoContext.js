@@ -24,9 +24,8 @@ export const VideoContextProvider = ({ children }) => {
   const [latestVideos, setLatestVideos] = useState([]);
   const [videoUpdated, setVideoUpdated] = useState(false);
 
-  const token = localStorage.getItem("token");
-
   const getContent = async (contentType) => {
+    const token = localStorage.getItem("token");
     setLoading(true);
     setLoading1(true);
     setLoading2(true);
@@ -34,6 +33,7 @@ export const VideoContextProvider = ({ children }) => {
     setLoading4(true);
     setLoading5(true);
     setLoading6(true);
+    console.log("token ", token);
     try {
       await axios
         .get("https://matrix24app.ca/api/content", {
@@ -93,6 +93,7 @@ export const VideoContextProvider = ({ children }) => {
   };
 
   const updateVideoContent = async (data) => {
+    const token = localStorage.getItem("token");
     try {
       await axios
         .put("https://matrix24app.ca/api/content", {
