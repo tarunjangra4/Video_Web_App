@@ -18,11 +18,11 @@ const VideoPlayer = lazy(() => import("./pages/VideoPlayer"));
 const Sections = lazy(() => import("./pages/Sections"));
 
 const App = () => {
-  const [openModal, setModalOpen] = useState(false);
+  // const [openModal, setModalOpen] = useState(false);
   const location = useLocation();
 
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
+  // const handleModalOpen = () => setModalOpen(true);
+  // const handleModalClose = () => setModalOpen(false);
   const token = localStorage.getItem("token");
 
   console.log("token ", token);
@@ -40,13 +40,16 @@ const App = () => {
           </div>
         ) : (
           <div className="flex">
-            <Navbar handleOpen={handleModalOpen} />
-            <div className="w-[100%] flex justify-center mt-20">
+            {/* <Navbar handleOpen={handleModalOpen} /> */}
+            <div className="w-[100%] flex justify-center">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/video" element={<VideoPlayer />}></Route>
-                <Route path="/video/:contentId" element={<Sections />}></Route>
+                <Route
+                  path="/video/:contentType"
+                  element={<Sections />}
+                ></Route>
                 {/* <Route path="/profile/:postId" element={<Profile />}></Route> */}
                 {/* <Route path="/edit-profile" element={<EditProfile />}></Route> */}
               </Routes>
@@ -54,9 +57,9 @@ const App = () => {
           </div>
         )}
       </Suspense>
-      <Modal open={openModal} onClose={handleModalClose}>
+      {/* <Modal open={openModal} onClose={handleModalClose}>
         <Upload handleModalClose={handleModalClose} />
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

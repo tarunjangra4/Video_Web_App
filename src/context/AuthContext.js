@@ -85,7 +85,6 @@ export const AuthContextProvider = ({ children }) => {
           // ...data,
         })
         .then((response) => {
-          console.log("new test response ", response);
           toast.success(response.data.message, {
             position: "top-right",
             autoClose: 5000,
@@ -99,7 +98,6 @@ export const AuthContextProvider = ({ children }) => {
           return response.data;
         })
         .catch((error) => {
-          console.log("error1-- ", error.response.data.error);
           toast.error(error.response.data.error, {
             position: "top-right",
             autoClose: 5000,
@@ -131,7 +129,6 @@ export const AuthContextProvider = ({ children }) => {
           ...data,
         })
         .then((response) => {
-          console.log("new test response ", response);
           toast.success(response.data.message, {
             position: "top-right",
             autoClose: 5000,
@@ -145,7 +142,6 @@ export const AuthContextProvider = ({ children }) => {
           return response.data;
         })
         .catch((error) => {
-          console.log("error1-- ", error.response.data.error);
           toast.error(error.response.data.error, {
             position: "top-right",
             autoClose: 5000,

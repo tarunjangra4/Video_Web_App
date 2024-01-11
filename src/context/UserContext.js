@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../Config";
+import { toast } from "react-toastify";
 // import { encode as btoa } from "base-64";
 
 export const UserContext = createContext();
@@ -29,6 +30,16 @@ export const UserContextProvider = ({ children }) => {
       localStorage.setItem("role", res.userRole);
     } catch (error) {
       console.error("err ", error);
+      toast.error(error.response.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -44,7 +55,7 @@ export const UserContextProvider = ({ children }) => {
           },
         })
         .then((response) => {
-          console.log("profile response ", response.data.user);
+          // console.log("profile response ", response.data.user);
           return response.data;
         })
         .catch((error) => {
@@ -53,12 +64,24 @@ export const UserContextProvider = ({ children }) => {
       setUserProfile(res.user);
     } catch (error) {
       console.error("err ", error);
+      toast.error(error.response.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
   const updateUserProfile = async (data) => {
     console.log("updated data ", userProfile);
     const token = localStorage.getItem("token");
+    const params = data ? { ...userProfile, ...data } : { ...userProfile };
+    console.log("params ", params);
     try {
       const res = await axios
         // .get('http://52.60.53.135:8080/api/117.235.194.61', {
@@ -68,7 +91,7 @@ export const UserContextProvider = ({ children }) => {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
           },
-          ...userProfile,
+          ...params,
         })
         .then((response) => {
           console.log("put api response");
@@ -78,9 +101,19 @@ export const UserContextProvider = ({ children }) => {
           console.error("put error ", err);
         });
       console.log("update profile  ", res);
-      setProfileUpdated(true);
+      setProfileUpdated((prev) => !prev);
     } catch (error) {
       console.error("err ", error);
+      toast.error(error.response.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
