@@ -221,16 +221,18 @@ const Sections = () => {
           </div>
         )}
         {description && (
-          <div className="mt-4 announcement bg-[#f4f6f7] rounded">
+          <div className="mt-4 announcement bg-[#f4f6f7] rounded pb-4">
             <PreviewComponent description={description} />
-            <div className="relative h-20 w-20">
-              <img
-                className="w-20 ml-10 cursor-pointer"
-                src={downloadPdfIcon}
-                alt=""
-                onClick={() => window.open(currVidDetails?.pdf, "_blank")}
-              />
-            </div>
+            {currVidDetails?.pdf && (
+              <div className="relative h-20 w-20">
+                <img
+                  className="w-20 ml-10 cursor-pointer hover:shadow-xl"
+                  src={downloadPdfIcon}
+                  alt=""
+                  onClick={() => window.open(currVidDetails?.pdf, "_blank")}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
