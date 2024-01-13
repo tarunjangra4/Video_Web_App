@@ -84,13 +84,14 @@ const CRMSection = () => {
                 hoverItem === index && (
                   <div
                     className="w-[400px] h-60 flex absolute top-0 left-0 bg-black bg-opacity-25"
-                    onClick={() =>
-                      navigate(
-                        `/video?name=${
-                          item.videoName
-                        }&path=${encodeURIComponent(item.videoUrl)}`
-                      )
-                    }
+                    onClick={() => {
+                      // navigate(
+                      //   `/video?name=${
+                      //     item.videoName
+                      //   }&path=${encodeURIComponent(item.videoUrl)}`
+                      // );
+                      navigate(`/video/CRM/${item?.videoName}`);
+                    }}
                   >
                     <PlayCircleFilledOutlined
                       style={{ fontSize: 50 }}

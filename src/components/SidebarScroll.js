@@ -31,9 +31,10 @@ function VideoBtn({
   return (
     <div
       className={`relative flex gap-3 py-2 my-1 items-center cursor-pointer ${
-        (hover || active === index) && "bg-[#ECEFF0] border-[#fff]"
+        (hover || active === item?.videoName) && "bg-[#ECEFF0] border-[#fff]"
       } px-2 rounded-lg before:content-[''] before:w-1 before:h-full before:absolute before:top-0 before:left-0 ${
-        active === index && "before:bg-[#6358DD] before:rounded-r-full"
+        active === item?.videoName &&
+        "before:bg-[#6358DD] before:rounded-r-full"
       }`}
       //   style={{
       //     clipPath: active ? "polygon(0 0, 73% 10%, 73% 90%, 0% 100%)" : "",
@@ -43,7 +44,7 @@ function VideoBtn({
       onClick={() => {
         updateUserDetails(currVidDetails?.id);
 
-        setActive(index);
+        setActive(item?.videoName);
         setCurrVidDetails({
           id: item?.id,
           thumbnail: item?.thumbnailUrl,
@@ -57,7 +58,7 @@ function VideoBtn({
     >
       {/* <SmartDisplayOutlinedIcon
         className={`w-10 bg-[#ECEFF0] opacity-90 border-4 border-[#ECEFF0] rounded ${
-          (hover || active === index) && "bg-[#fff] border-[#fff]"
+          (hover || active === item?.videoName) && "bg-[#fff] border-[#fff]"
         }`}
       /> */}
 
@@ -68,7 +69,7 @@ function VideoBtn({
       />
       <div
         className={`text-[14px] font-medium text-base ${
-          active === index && "text-[#6358DD]"
+          active === item?.videoName && "text-[#6358DD]"
         }`}
         style={{ fontFamily: "Open Sans, serif" }}
       >
@@ -105,15 +106,30 @@ const SidebarScroll = ({
     //     videoDescription: videosData?.[active]?.videoDescription,
     //     completeDescription: videosData?.[active]?.completeDescription,
     //   });
-    setCurrVidDetails({
-      id: videosData?.[0]?.id,
-      thumbnail: videosData?.[0]?.thumbnailUrl,
-      url: videosData?.[0]?.videoUrl,
-      pdf: videosData?.[0]?.pdfUrl,
-      name: videosData?.[0]?.videoName,
-      videoDescription: videosData?.[0]?.videoDescription,
-      completeDescription: videosData?.[0]?.completeDescription,
-    });
+    if (active) {
+      let data = videosData?.filter((item, index) => {
+        return item?.videoName === active;
+      });
+      setCurrVidDetails({
+        id: data?.[0]?.id,
+        thumbnail: data?.[0]?.thumbnailUrl,
+        url: data?.[0]?.videoUrl,
+        pdf: data?.[0]?.pdfUrl,
+        name: data?.[0]?.videoName,
+        videoDescription: data?.[0]?.videoDescription,
+        completeDescription: data?.[0]?.completeDescription,
+      });
+    } else {
+      setCurrVidDetails({
+        id: videosData?.[0]?.id,
+        thumbnail: videosData?.[0]?.thumbnailUrl,
+        url: videosData?.[0]?.videoUrl,
+        pdf: videosData?.[0]?.pdfUrl,
+        name: videosData?.[0]?.videoName,
+        videoDescription: videosData?.[0]?.videoDescription,
+        completeDescription: videosData?.[0]?.completeDescription,
+      });
+    }
     //   }, [videosData, active]);
   }, [videosData]);
 

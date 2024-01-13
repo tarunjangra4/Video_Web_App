@@ -162,6 +162,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     setIsLoading(false);
   };
 

@@ -14,7 +14,7 @@ const Sections = () => {
   const { contentType, videoName } = useParams();
   const [videos, setVideos] = useState([]);
   const [currVidDetails, setCurrVidDetails] = useState(null); // selected video
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(videoName);
   const [description, setDescription] = useState("");
   const [initialScript, setInitialScript] = useState("");
   const videoRef = useRef(null);
@@ -197,7 +197,7 @@ const Sections = () => {
         {currVidDetails?.url && (
           <video
             ref={videoRef}
-            key={currVidDetails.id}
+            key={currVidDetails?.id}
             controls
             width="100%"
             style={{ maxHeight: "90vh", borderRadius: "10px" }}
